@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		511CF95E2CAE4AD70051B737 /* GDFMUserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511CF95D2CAE4AD70051B737 /* GDFMUserDefaultManager.swift */; };
+		511CF9612CAE4B700051B737 /* GDFMNameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511CF9602CAE4B700051B737 /* GDFMNameSpace.swift */; };
 		51256D182CA54E92004743AF /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51256D172CA54E92004743AF /* Types.swift */; };
+		51B2DF812CAF9E7E0005601C /* GDFMAuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B2DF802CAF9E7E0005601C /* GDFMAuthenticationViewController.swift */; };
+		51B2DF842CAFA4790005601C /* env.plist in Resources */ = {isa = PBXBuildFile; fileRef = 51B2DF832CAFA4790005601C /* env.plist */; };
+		51C005AD2CAD2F5400565342 /* GDFMAuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C005AC2CAD2F5400565342 /* GDFMAuthenticationManager.swift */; };
 		51F778B02CA481DE005CA98A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F778AF2CA481DE005CA98A /* AppDelegate.swift */; };
 		51F778B22CA481DE005CA98A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F778B12CA481DE005CA98A /* SceneDelegate.swift */; };
 		51F778B42CA481DE005CA98A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F778B32CA481DE005CA98A /* ViewController.swift */; };
@@ -17,7 +22,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		511CF95D2CAE4AD70051B737 /* GDFMUserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMUserDefaultManager.swift; sourceTree = "<group>"; };
+		511CF9602CAE4B700051B737 /* GDFMNameSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMNameSpace.swift; sourceTree = "<group>"; };
 		51256D172CA54E92004743AF /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		51B2DF802CAF9E7E0005601C /* GDFMAuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMAuthenticationViewController.swift; sourceTree = "<group>"; };
+		51B2DF832CAFA4790005601C /* env.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = env.plist; sourceTree = "<group>"; };
+		51C005AC2CAD2F5400565342 /* GDFMAuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMAuthenticationManager.swift; sourceTree = "<group>"; };
 		51F778AC2CA481DE005CA98A /* GoogleDriveFileManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoogleDriveFileManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51F778AF2CA481DE005CA98A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		51F778B12CA481DE005CA98A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,11 +49,69 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		51C005AA2CAD2CCE00565342 /* Authentication */ = {
+		511CF95B2CAE4A540051B737 /* Persistance */ = {
+			isa = PBXGroup;
+			children = (
+				511CF95C2CAE4A5D0051B737 /* Controller */,
+			);
+			path = Persistance;
+			sourceTree = "<group>";
+		};
+		511CF95C2CAE4A5D0051B737 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				511CF95D2CAE4AD70051B737 /* GDFMUserDefaultManager.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		511CF95F2CAE4B5C0051B737 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				511CF9602CAE4B700051B737 /* GDFMNameSpace.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		51B2DF7E2CAF9E5D0005601C /* Model */ = {
 			isa = PBXGroup;
 			children = (
 			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		51B2DF7F2CAF9E630005601C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				51B2DF802CAF9E7E0005601C /* GDFMAuthenticationViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		51B2DF822CAFA45F0005601C /* Environment */ = {
+			isa = PBXGroup;
+			children = (
+				51B2DF832CAFA4790005601C /* env.plist */,
+			);
+			path = Environment;
+			sourceTree = "<group>";
+		};
+		51C005AA2CAD2CCE00565342 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				51B2DF7F2CAF9E630005601C /* View */,
+				51B2DF7E2CAF9E5D0005601C /* Model */,
+				51C005AB2CAD2F3600565342 /* Controller */,
+			);
 			path = Authentication;
+			sourceTree = "<group>";
+		};
+		51C005AB2CAD2F3600565342 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				51C005AC2CAD2F5400565342 /* GDFMAuthenticationManager.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		51F778A32CA481DE005CA98A = {
@@ -65,6 +133,9 @@
 		51F778AE2CA481DE005CA98A /* GoogleDriveFileManager */ = {
 			isa = PBXGroup;
 			children = (
+				51B2DF822CAFA45F0005601C /* Environment */,
+				511CF95F2CAE4B5C0051B737 /* Core */,
+				511CF95B2CAE4A540051B737 /* Persistance */,
 				51C005AA2CAD2CCE00565342 /* Authentication */,
 				51F778AF2CA481DE005CA98A /* AppDelegate.swift */,
 				51F778B12CA481DE005CA98A /* SceneDelegate.swift */,
@@ -136,6 +207,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51B2DF842CAFA4790005601C /* env.plist in Resources */,
 				51F778B92CA481E0005CA98A /* Assets.xcassets in Resources */,
 				51F778BC2CA481E0005CA98A /* Base in Resources */,
 				51F778B72CA481DE005CA98A /* Base in Resources */,
@@ -149,10 +221,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				511CF95E2CAE4AD70051B737 /* GDFMUserDefaultManager.swift in Sources */,
 				51F778B42CA481DE005CA98A /* ViewController.swift in Sources */,
 				51F778B02CA481DE005CA98A /* AppDelegate.swift in Sources */,
 				51F778B22CA481DE005CA98A /* SceneDelegate.swift in Sources */,
+				51C005AD2CAD2F5400565342 /* GDFMAuthenticationManager.swift in Sources */,
 				51256D182CA54E92004743AF /* Types.swift in Sources */,
+				51B2DF812CAF9E7E0005601C /* GDFMAuthenticationViewController.swift in Sources */,
+				511CF9612CAE4B700051B737 /* GDFMNameSpace.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

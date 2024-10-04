@@ -51,8 +51,12 @@ class ViewController: UIViewController, ASWebAuthenticationPresentationContextPr
         }
 
         func extractAuthorizationCode(from url: URL) -> String? {
+            print("URL -> \(url.absoluteString)")
             let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
-            return components?.queryItems?.first(where: { $0.name == "code" })?.value
+            return components?.queryItems?.first(where: { item in
+                item.name == "code"
+            })?.value
+//            return components?.queryItems?.first(where: { $0.name == "code" })?.value
         }
 
         func exchangeAuthorizationCodeForToken(code: String) {
@@ -121,4 +125,3 @@ class ViewController: UIViewController, ASWebAuthenticationPresentationContextPr
             task.resume()
         }
 }
-
