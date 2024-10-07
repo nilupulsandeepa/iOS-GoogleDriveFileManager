@@ -21,6 +21,8 @@ public class GDFMAuthenticationManager: NSObject {
     
     private var g_AuthorizationCode: String? = nil
     
+    public var delegate: GDFMAuthenticationDelegate? = nil
+    
     //---- Constructor
     private override init() {
         
@@ -37,7 +39,11 @@ public class GDFMAuthenticationManager: NSObject {
             callbackURLScheme: m_CallbackScheme) { callBackURL, error in
                 if let m_CallBackURL = callBackURL {
                     if let m_AuthCode: String = self.getAuthorizationCode(url: m_CallBackURL) {
-                        
+                        if (self.delegate != nil) {
+                            DispatchQueue.main.async {
+                                self.delegate!.didReceiveAuthorizationCode(code: m_AuthCode)
+                            }
+                        }
                     }
                 }
             }
@@ -46,6 +52,50 @@ public class GDFMAuthenticationManager: NSObject {
     //---- Action Methods
     public func setPresentationAnchor(_ anchor: ASPresentationAnchor) {
         g_PresentationAnchor = anchor
+    }
+    
+    public func requestAPIKey(authCode: String) {
+        let m_TokenURL = URL(string: "https://oauth2.googleapis.com/token")!
+        var m_Request = URLRequest(url: m_TokenURL)
+        m_Request.httpMethod = "POST"
+        
+        let redirectURI = "\(g_ReversedClientID):/oauthredirect"
+        
+        let bodyParams = [
+            "code": authCode,
+            "client_id": g_GoogleClientID,
+            "redirect_uri": redirectURI,
+            "grant_type": "authorization_code"
+        ]
+        let bodyString = bodyParams.map { "\($0.key)=\($0.value)" }.joined(separator: "&")
+        m_Request.httpBody = bodyString.data(using: .utf8)
+        m_Request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+
+        let m_RequestTask: URLSessionDataTask = URLSession.shared.dataTask(with: m_Request) {
+            data, response, error in
+            
+            guard let m_Data = data else {
+                fatalError("\(error?.localizedDescription ?? "Data nil")")
+            }
+            
+            do {
+                if let m_JSONResponse = try JSONSerialization.jsonObject(with: m_Data) as? [String: Any] {
+                    if let m_AccessToken = m_JSONResponse["access_token"] as? String {
+                        if (self.delegate != nil) {
+                            DispatchQueue.main.async {
+                                self.delegate!.didReceiveAPIKey(key: m_AccessToken)
+                            }
+                        }
+                    } else {
+                        print("API Key not available")
+                    }
+                }
+            } catch {
+                print("Error parsing JSON: \(error.localizedDescription)")
+            }
+        }
+        
+        m_RequestTask.resume()
     }
     
     //---- Helper Methods
