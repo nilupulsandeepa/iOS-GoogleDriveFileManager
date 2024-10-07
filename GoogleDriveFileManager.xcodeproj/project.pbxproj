@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		51100D012CB3D04000EDCC63 /* GDFMDriveDocumentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51100D002CB3D04000EDCC63 /* GDFMDriveDocumentManager.swift */; };
+		51100D042CB3DD4C00EDCC63 /* GDFMEnvironmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51100D032CB3DD4C00EDCC63 /* GDFMEnvironmentManager.swift */; };
+		51100D072CB3E00700EDCC63 /* GDFMDriveFileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51100D062CB3E00700EDCC63 /* GDFMDriveFileList.swift */; };
 		511CF95E2CAE4AD70051B737 /* GDFMUserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511CF95D2CAE4AD70051B737 /* GDFMUserDefaultManager.swift */; };
 		511CF9612CAE4B700051B737 /* GDFMNameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511CF9602CAE4B700051B737 /* GDFMNameSpace.swift */; };
 		51256D182CA54E92004743AF /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51256D172CA54E92004743AF /* Types.swift */; };
@@ -22,6 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		51100D002CB3D04000EDCC63 /* GDFMDriveDocumentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMDriveDocumentManager.swift; sourceTree = "<group>"; };
+		51100D032CB3DD4C00EDCC63 /* GDFMEnvironmentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMEnvironmentManager.swift; sourceTree = "<group>"; };
+		51100D062CB3E00700EDCC63 /* GDFMDriveFileList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMDriveFileList.swift; sourceTree = "<group>"; };
 		511CF95D2CAE4AD70051B737 /* GDFMUserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMUserDefaultManager.swift; sourceTree = "<group>"; };
 		511CF9602CAE4B700051B737 /* GDFMNameSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMNameSpace.swift; sourceTree = "<group>"; };
 		51256D172CA54E92004743AF /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
@@ -49,6 +55,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		51100CFE2CB3D01100EDCC63 /* DriveDocument */ = {
+			isa = PBXGroup;
+			children = (
+				51100D052CB3DFF500EDCC63 /* Model */,
+				51100CFF2CB3D02C00EDCC63 /* Controller */,
+			);
+			path = DriveDocument;
+			sourceTree = "<group>";
+		};
+		51100CFF2CB3D02C00EDCC63 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				51100D002CB3D04000EDCC63 /* GDFMDriveDocumentManager.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		51100D022CB3DD3800EDCC63 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				51100D032CB3DD4C00EDCC63 /* GDFMEnvironmentManager.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		51100D052CB3DFF500EDCC63 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				51100D062CB3E00700EDCC63 /* GDFMDriveFileList.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		511CF95B2CAE4A540051B737 /* Persistance */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +130,7 @@
 		51B2DF822CAFA45F0005601C /* Environment */ = {
 			isa = PBXGroup;
 			children = (
+				51100D022CB3DD3800EDCC63 /* Controller */,
 				51B2DF832CAFA4790005601C /* env.plist */,
 			);
 			path = Environment;
@@ -133,6 +173,7 @@
 		51F778AE2CA481DE005CA98A /* GoogleDriveFileManager */ = {
 			isa = PBXGroup;
 			children = (
+				51100CFE2CB3D01100EDCC63 /* DriveDocument */,
 				51B2DF822CAFA45F0005601C /* Environment */,
 				511CF95F2CAE4B5C0051B737 /* Core */,
 				511CF95B2CAE4A540051B737 /* Persistance */,
@@ -222,9 +263,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				511CF95E2CAE4AD70051B737 /* GDFMUserDefaultManager.swift in Sources */,
+				51100D012CB3D04000EDCC63 /* GDFMDriveDocumentManager.swift in Sources */,
 				51F778B42CA481DE005CA98A /* ViewController.swift in Sources */,
 				51F778B02CA481DE005CA98A /* AppDelegate.swift in Sources */,
+				51100D072CB3E00700EDCC63 /* GDFMDriveFileList.swift in Sources */,
 				51F778B22CA481DE005CA98A /* SceneDelegate.swift in Sources */,
+				51100D042CB3DD4C00EDCC63 /* GDFMEnvironmentManager.swift in Sources */,
 				51C005AD2CAD2F5400565342 /* GDFMAuthenticationManager.swift in Sources */,
 				51256D182CA54E92004743AF /* Types.swift in Sources */,
 				51B2DF812CAF9E7E0005601C /* GDFMAuthenticationViewController.swift in Sources */,

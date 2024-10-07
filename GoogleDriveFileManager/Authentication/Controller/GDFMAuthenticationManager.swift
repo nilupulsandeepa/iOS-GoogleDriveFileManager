@@ -9,7 +9,7 @@ import AuthenticationServices
 
 public class GDFMAuthenticationManager: NSObject {
     
-    //---- Properties
+    //---- MARK: Properties
     public static var shared: GDFMAuthenticationManager = GDFMAuthenticationManager()
     
     private var g_AuthSession: ASWebAuthenticationSession?
@@ -23,15 +23,23 @@ public class GDFMAuthenticationManager: NSObject {
     
     public var delegate: GDFMAuthenticationDelegate? = nil
     
-    //---- Constructor
+    //---- MARK: Constructor
     private override init() {
         
     }
     
-    //---- Initialization
+    //---- MARK: Initialization
     public func initializeAuthSession() {
         let m_RedirectURI = "\(g_ReversedClientID):/oauthredirect"
-        let m_AuthURL = URL(string: "https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=\(g_GoogleClientID)&redirect_uri=\(m_RedirectURI)&scope=\(g_PermissionScope)")!
+        var m_AuthURL = URL(string: "https://accounts.google.com/o/oauth2/auth")!
+        let m_QueryParameterDictionary: [String: String] = [
+            "response_type": "code",
+            "client_id": g_GoogleClientID,
+            "redirect_uri": m_RedirectURI,
+            "scope": g_PermissionScope
+        ]
+        let m_QueryParameters: [URLQueryItem] = m_QueryParameterDictionary.map{ URLQueryItem(name: $0.key, value: $0.value) }
+        m_AuthURL = m_AuthURL.appending(queryItems: m_QueryParameters)
         let m_CallbackScheme = "\(g_ReversedClientID)"
         
         g_AuthSession = ASWebAuthenticationSession(
@@ -47,9 +55,12 @@ public class GDFMAuthenticationManager: NSObject {
                     }
                 }
             }
+        
+        g_AuthSession!.presentationContextProvider = self
+        g_AuthSession!.start()
     }
     
-    //---- Action Methods
+    //---- MARK: Action Methods
     public func setPresentationAnchor(_ anchor: ASPresentationAnchor) {
         g_PresentationAnchor = anchor
     }
@@ -67,7 +78,7 @@ public class GDFMAuthenticationManager: NSObject {
             "redirect_uri": redirectURI,
             "grant_type": "authorization_code"
         ]
-        let bodyString = bodyParams.map { "\($0.key)=\($0.value)" }.joined(separator: "&")
+        let bodyString = bodyParams.map{ "\($0.key)=\($0.value)" }.joined(separator: "&")
         m_Request.httpBody = bodyString.data(using: .utf8)
         m_Request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
 
@@ -98,7 +109,7 @@ public class GDFMAuthenticationManager: NSObject {
         m_RequestTask.resume()
     }
     
-    //---- Helper Methods
+    //---- MARK: Helper Methods
     private func getAuthorizationCode(url: URL) -> String? {
         if let m_Components: URLComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) {
             if let m_QueryItems = m_Components.queryItems {
@@ -111,13 +122,13 @@ public class GDFMAuthenticationManager: NSObject {
 
 extension GDFMAuthenticationManager: ASWebAuthenticationPresentationContextProviding {
     public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-        guard let m_PresentationAnchor = g_PresentationAnchor else { fatalError("GDFMAuthenticationManager: Presentation Anchor found nil while unwrapping") }
+        guard g_PresentationAnchor != nil else { fatalError("GDFMAuthenticationManager: Presentation Anchor found nil while unwrapping") }
         return g_PresentationAnchor!
     }
 }
 
 
-//---- MARK: GDFMAuthentication Delegate Protocol
+//----MARK: GDFMAuthentication Delegate Protocol
 public protocol GDFMAuthenticationDelegate {
     func didReceiveAuthorizationCode(code: String)
     func didReceiveAPIKey(key: String)
