@@ -9,7 +9,7 @@ import UIKit
 
 public class GDFMAuthenticationViewController: UIViewController {
     public override func viewDidAppear(_ animated: Bool) {
-        view.backgroundColor = .red
+        view.backgroundColor = .white
 //        GDFMUserDefaultManager.shared.googleAPIKey = "_none"
         if (GDFMUserDefaultManager.shared.googleAPIKey != "_none") {
             GDFMDriveDocumentManager.shared.delegate = self
@@ -45,7 +45,9 @@ extension GDFMAuthenticationViewController: GDFMAuthenticationDelegate {
 
 extension GDFMAuthenticationViewController: GDFMDriveDocumentManagerDelegate {
     public func onReceiveFileList(list: [GDFMDriveFile]) {
-        GDFMDriveDocumentManager.shared.downloadFileFromDrive(file: list.first!, apiKey: GDFMUserDefaultManager.shared.googleAPIKey)
+        for file in list {
+            GDFMDriveDocumentManager.shared.downloadFileFromDrive(file: file, apiKey: GDFMUserDefaultManager.shared.googleAPIKey)
+        }
     }
     
     public func onFileDownloadComplete(tempURL: URL, fileName: String) {

@@ -124,7 +124,6 @@
 		511CF95F2CAE4B5C0051B737 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				511CF9602CAE4B700051B737 /* GDFMNameSpace.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -203,6 +202,7 @@
 				51F778BA2CA481E0005CA98A /* LaunchScreen.storyboard */,
 				51F778BD2CA481E0005CA98A /* Info.plist */,
 				51256D172CA54E92004743AF /* Types.swift */,
+				511CF9602CAE4B700051B737 /* GDFMNameSpace.swift */,
 			);
 			path = GoogleDriveFileManager;
 			sourceTree = "<group>";
@@ -444,7 +444,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QGHKZZ365Q;
+				DEVELOPMENT_TEAM = MKK9FRT2U3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GoogleDriveFileManager/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

@@ -15,8 +15,8 @@ public struct GDFMNameSpace {
     }
     
     public struct FileMimeType {
-        public static let googleSheet: String = ""
-        public static let googleDoc: String = ""
-        public static let googleSlide: String = ""
+        public static let googleSheet: String = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        public static let googleDoc: String = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        public static let googlePresentation: String = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
     }
 }

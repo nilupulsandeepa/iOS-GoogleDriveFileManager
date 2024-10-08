@@ -67,7 +67,7 @@ public class GDFMDriveDocumentManager {
     }
     //---- Download file
     public func downloadFileFromDrive(file: GDFMDriveFile, apiKey: String) {
-        getFileDownloadDetails(fileID: file.id, apiKey: apiKey) {
+        getFileDownloadDetails(file: file, apiKey: apiKey) {
             fileDownloadURL in
             self.downloadActualFile(downloadURL: fileDownloadURL, fileName: file.name, apiKey: apiKey)
         }
@@ -78,10 +78,10 @@ public class GDFMDriveDocumentManager {
     //---- Upload batch of files
     
     //---- MARK: Helper Methods
-    private func getFileDownloadDetails(fileID: String, apiKey: String, completion: @escaping (URL) -> Void) {
-        var m_URL: URL = URL(string: "https://www.googleapis.com/drive/v3/files/\(fileID)/download")!
+    private func getFileDownloadDetails(file: GDFMDriveFile, apiKey: String, completion: @escaping (URL) -> Void) {
+        var m_URL: URL = URL(string: "https://www.googleapis.com/drive/v3/files/\(file.id)/download")!
         let m_QueryParameterDictionary: [String: String] = [
-            "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            "mimeType": getMimeTypeForFileType(file.mimeType)
         ]
         let m_QueryParameters: [URLQueryItem] = m_QueryParameterDictionary.map{ URLQueryItem(name: $0.key, value: $0.value )}
         m_URL = m_URL.appending(queryItems: m_QueryParameters)
@@ -138,6 +138,18 @@ public class GDFMDriveDocumentManager {
         }
         
         m_RequestTask.resume()
+    }
+    
+    private func getMimeTypeForFileType(_ fileType: String) -> String {
+        if (fileType.contains("spreadsheet")) {
+            return GDFMNameSpace.FileMimeType.googleSheet
+        } else if (fileType.contains("document")) {
+            return GDFMNameSpace.FileMimeType.googleDoc
+        } else if (fileType.contains("presentation")) {
+            return GDFMNameSpace.FileMimeType.googlePresentation
+        } else {
+            return ""
+        }
     }
     //---- Check authentication
 }
