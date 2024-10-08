@@ -8,7 +8,7 @@
 import Foundation
 
 public struct GDFMDriveFileList: Codable {
-    var files: [File]
+    var files: [GDFMDriveFile]
 }
 
 public struct GDFMDriveFile: Codable {

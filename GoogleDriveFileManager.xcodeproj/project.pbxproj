@@ -10,9 +10,12 @@
 		51100D012CB3D04000EDCC63 /* GDFMDriveDocumentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51100D002CB3D04000EDCC63 /* GDFMDriveDocumentManager.swift */; };
 		51100D042CB3DD4C00EDCC63 /* GDFMEnvironmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51100D032CB3DD4C00EDCC63 /* GDFMEnvironmentManager.swift */; };
 		51100D072CB3E00700EDCC63 /* GDFMDriveFileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51100D062CB3E00700EDCC63 /* GDFMDriveFileList.swift */; };
+		51100D0A2CB40E0B00EDCC63 /* GDFMDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51100D092CB40E0B00EDCC63 /* GDFMDocumentViewController.swift */; };
 		511CF95E2CAE4AD70051B737 /* GDFMUserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511CF95D2CAE4AD70051B737 /* GDFMUserDefaultManager.swift */; };
 		511CF9612CAE4B700051B737 /* GDFMNameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511CF9602CAE4B700051B737 /* GDFMNameSpace.swift */; };
 		51256D182CA54E92004743AF /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51256D172CA54E92004743AF /* Types.swift */; };
+		5196F9692CB4EB3000F072BC /* GDFMLocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5196F9682CB4EB3000F072BC /* GDFMLocalFileManager.swift */; };
+		5196F96B2CB5158000F072BC /* GDFMFileDownloadDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5196F96A2CB5158000F072BC /* GDFMFileDownloadDetails.swift */; };
 		51B2DF812CAF9E7E0005601C /* GDFMAuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B2DF802CAF9E7E0005601C /* GDFMAuthenticationViewController.swift */; };
 		51B2DF842CAFA4790005601C /* env.plist in Resources */ = {isa = PBXBuildFile; fileRef = 51B2DF832CAFA4790005601C /* env.plist */; };
 		51C005AD2CAD2F5400565342 /* GDFMAuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C005AC2CAD2F5400565342 /* GDFMAuthenticationManager.swift */; };
@@ -28,9 +31,12 @@
 		51100D002CB3D04000EDCC63 /* GDFMDriveDocumentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMDriveDocumentManager.swift; sourceTree = "<group>"; };
 		51100D032CB3DD4C00EDCC63 /* GDFMEnvironmentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMEnvironmentManager.swift; sourceTree = "<group>"; };
 		51100D062CB3E00700EDCC63 /* GDFMDriveFileList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMDriveFileList.swift; sourceTree = "<group>"; };
+		51100D092CB40E0B00EDCC63 /* GDFMDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMDocumentViewController.swift; sourceTree = "<group>"; };
 		511CF95D2CAE4AD70051B737 /* GDFMUserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMUserDefaultManager.swift; sourceTree = "<group>"; };
 		511CF9602CAE4B700051B737 /* GDFMNameSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMNameSpace.swift; sourceTree = "<group>"; };
 		51256D172CA54E92004743AF /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		5196F9682CB4EB3000F072BC /* GDFMLocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMLocalFileManager.swift; sourceTree = "<group>"; };
+		5196F96A2CB5158000F072BC /* GDFMFileDownloadDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMFileDownloadDetails.swift; sourceTree = "<group>"; };
 		51B2DF802CAF9E7E0005601C /* GDFMAuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMAuthenticationViewController.swift; sourceTree = "<group>"; };
 		51B2DF832CAFA4790005601C /* env.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = env.plist; sourceTree = "<group>"; };
 		51C005AC2CAD2F5400565342 /* GDFMAuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMAuthenticationManager.swift; sourceTree = "<group>"; };
@@ -58,6 +64,7 @@
 		51100CFE2CB3D01100EDCC63 /* DriveDocument */ = {
 			isa = PBXGroup;
 			children = (
+				51100D082CB40DDD00EDCC63 /* View */,
 				51100D052CB3DFF500EDCC63 /* Model */,
 				51100CFF2CB3D02C00EDCC63 /* Controller */,
 			);
@@ -84,8 +91,18 @@
 			isa = PBXGroup;
 			children = (
 				51100D062CB3E00700EDCC63 /* GDFMDriveFileList.swift */,
+				5196F96A2CB5158000F072BC /* GDFMFileDownloadDetails.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		51100D082CB40DDD00EDCC63 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				51100D092CB40E0B00EDCC63 /* GDFMDocumentViewController.swift */,
+				5196F9682CB4EB3000F072BC /* GDFMLocalFileManager.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		511CF95B2CAE4A540051B737 /* Persistance */ = {
@@ -268,10 +285,13 @@
 				51F778B02CA481DE005CA98A /* AppDelegate.swift in Sources */,
 				51100D072CB3E00700EDCC63 /* GDFMDriveFileList.swift in Sources */,
 				51F778B22CA481DE005CA98A /* SceneDelegate.swift in Sources */,
+				5196F96B2CB5158000F072BC /* GDFMFileDownloadDetails.swift in Sources */,
 				51100D042CB3DD4C00EDCC63 /* GDFMEnvironmentManager.swift in Sources */,
 				51C005AD2CAD2F5400565342 /* GDFMAuthenticationManager.swift in Sources */,
 				51256D182CA54E92004743AF /* Types.swift in Sources */,
 				51B2DF812CAF9E7E0005601C /* GDFMAuthenticationViewController.swift in Sources */,
+				51100D0A2CB40E0B00EDCC63 /* GDFMDocumentViewController.swift in Sources */,
+				5196F9692CB4EB3000F072BC /* GDFMLocalFileManager.swift in Sources */,
 				511CF9612CAE4B700051B737 /* GDFMNameSpace.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,7 +370,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -407,7 +427,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -432,6 +452,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -460,6 +481,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
