@@ -52,6 +52,18 @@ public class GDFMAuthenticationManager: NSObject {
                                 self.delegate!.didReceiveAuthorizationCode(code: m_AuthCode)
                             }
                         }
+                    } else {
+                        if (self.delegate != nil) {
+                            DispatchQueue.main.async {
+                                self.delegate!.onAuthorizationFail()
+                            }
+                        }
+                    }
+                } else {
+                    if (self.delegate != nil) {
+                        DispatchQueue.main.async {
+                            self.delegate!.onAuthorizationFail()
+                        }
                     }
                 }
             }
@@ -67,20 +79,20 @@ public class GDFMAuthenticationManager: NSObject {
     
     public func requestAPIKey(authCode: String) {
         let m_TokenURL = URL(string: "https://oauth2.googleapis.com/token")!
+        
         var m_Request = URLRequest(url: m_TokenURL)
         m_Request.httpMethod = "POST"
+        m_Request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
-        let redirectURI = "\(g_ReversedClientID):/oauthredirect"
-        
-        let bodyParams = [
+        let m_RedirectURI = "\(g_ReversedClientID):/oauthredirect"
+        let m_BodyParams = [
             "code": authCode,
             "client_id": g_GoogleClientID,
-            "redirect_uri": redirectURI,
+            "redirect_uri": m_RedirectURI,
             "grant_type": "authorization_code"
         ]
-        let bodyString = bodyParams.map{ "\($0.key)=\($0.value)" }.joined(separator: "&")
+        let bodyString = m_BodyParams.map{ "\($0.key)=\($0.value)" }.joined(separator: "&")
         m_Request.httpBody = bodyString.data(using: .utf8)
-        m_Request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
 
         let m_RequestTask: URLSessionDataTask = URLSession.shared.dataTask(with: m_Request) {
             data, response, error in
@@ -132,4 +144,5 @@ extension GDFMAuthenticationManager: ASWebAuthenticationPresentationContextProvi
 public protocol GDFMAuthenticationDelegate {
     func didReceiveAuthorizationCode(code: String)
     func didReceiveAPIKey(key: String)
+    func onAuthorizationFail()
 }
