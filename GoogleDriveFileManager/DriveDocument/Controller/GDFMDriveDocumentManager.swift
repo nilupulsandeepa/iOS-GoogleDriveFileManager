@@ -38,7 +38,6 @@ public class GDFMDriveDocumentManager {
             }
             
             do {
-                print(String(data: m_Data, encoding: .utf8))
                 let m_FileList: GDFMDriveFileList = try JSONDecoder().decode(GDFMDriveFileList.self, from: m_Data)
                 self.g_CurrentDriveFileList = m_FileList.files
                 if (self.delegate != nil) {
@@ -101,7 +100,7 @@ public class GDFMDriveDocumentManager {
         let m_RequestTask: URLSessionTask = URLSession.shared.uploadTask(with: m_Request, from: m_RequestBody) {
             data, response, error in
             
-            guard let m_Data = data else {
+            guard data != nil else {
                 fatalError("\(error?.localizedDescription ?? "Data nil")")
             }
             
@@ -136,7 +135,7 @@ public class GDFMDriveDocumentManager {
             }
             
             do {
-                let m_FileDownloadDetails: GDFMFileDownloadDetails = try JSONDecoder().decode(GDFMFileDownloadDetails.self, from: data!)
+                let m_FileDownloadDetails: GDFMFileDownloadDetails = try JSONDecoder().decode(GDFMFileDownloadDetails.self, from: m_Data)
                 let m_DownloadURLString: String = m_FileDownloadDetails.response.downloadUri
                 let m_DownloadURL: URL = URL(string: m_DownloadURLString)!
                 completion(m_DownloadURL)

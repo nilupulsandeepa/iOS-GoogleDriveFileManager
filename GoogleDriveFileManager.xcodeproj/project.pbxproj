@@ -14,6 +14,7 @@
 		511CF95E2CAE4AD70051B737 /* GDFMUserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511CF95D2CAE4AD70051B737 /* GDFMUserDefaultManager.swift */; };
 		511CF9612CAE4B700051B737 /* GDFMNameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511CF9602CAE4B700051B737 /* GDFMNameSpace.swift */; };
 		51256D182CA54E92004743AF /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51256D172CA54E92004743AF /* Types.swift */; };
+		5193E10C2CB66E4A004BD88A /* GDFMAuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5193E10B2CB66E4A004BD88A /* GDFMAuthenticationView.swift */; };
 		5196F9692CB4EB3000F072BC /* GDFMLocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5196F9682CB4EB3000F072BC /* GDFMLocalFileManager.swift */; };
 		5196F96B2CB5158000F072BC /* GDFMFileDownloadDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5196F96A2CB5158000F072BC /* GDFMFileDownloadDetails.swift */; };
 		51B2DF812CAF9E7E0005601C /* GDFMAuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B2DF802CAF9E7E0005601C /* GDFMAuthenticationViewController.swift */; };
@@ -35,6 +36,7 @@
 		511CF95D2CAE4AD70051B737 /* GDFMUserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMUserDefaultManager.swift; sourceTree = "<group>"; };
 		511CF9602CAE4B700051B737 /* GDFMNameSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMNameSpace.swift; sourceTree = "<group>"; };
 		51256D172CA54E92004743AF /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		5193E10B2CB66E4A004BD88A /* GDFMAuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMAuthenticationView.swift; sourceTree = "<group>"; };
 		5196F9682CB4EB3000F072BC /* GDFMLocalFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMLocalFileManager.swift; sourceTree = "<group>"; };
 		5196F96A2CB5158000F072BC /* GDFMFileDownloadDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMFileDownloadDetails.swift; sourceTree = "<group>"; };
 		51B2DF802CAF9E7E0005601C /* GDFMAuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDFMAuthenticationViewController.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				51B2DF802CAF9E7E0005601C /* GDFMAuthenticationViewController.swift */,
+				5193E10B2CB66E4A004BD88A /* GDFMAuthenticationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				51100D042CB3DD4C00EDCC63 /* GDFMEnvironmentManager.swift in Sources */,
 				51C005AD2CAD2F5400565342 /* GDFMAuthenticationManager.swift in Sources */,
 				51256D182CA54E92004743AF /* Types.swift in Sources */,
+				5193E10C2CB66E4A004BD88A /* GDFMAuthenticationView.swift in Sources */,
 				51B2DF812CAF9E7E0005601C /* GDFMAuthenticationViewController.swift in Sources */,
 				51100D0A2CB40E0B00EDCC63 /* GDFMDocumentViewController.swift in Sources */,
 				5196F9692CB4EB3000F072BC /* GDFMLocalFileManager.swift in Sources */,
