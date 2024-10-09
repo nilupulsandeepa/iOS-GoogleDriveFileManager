@@ -73,9 +73,47 @@ public class GDFMDriveDocumentManager {
         }
     }
     
-    //---- Download batch of files
     //---- Upload file
-    //---- Upload batch of files
+    public func uploadFileToDrive(fileURL: URL, apiKey: String) {
+        var m_URL: URL = URL(string: "https://www.googleapis.com/upload/drive/v3/files")!
+        let m_QueryParameterDictionary: [String: String] = [
+            "uploadType": "multipart"
+        ]
+        let m_QueryParameters: [URLQueryItem] = m_QueryParameterDictionary.map{ URLQueryItem(name: $0.key, value: $0.value) }
+        m_URL = m_URL.appending(queryItems: m_QueryParameters)
+        
+        var m_FileData: Data
+        do {
+            m_FileData = try Data(contentsOf: fileURL)
+        } catch {
+            fatalError("Upload File Data Error")
+        }
+        
+        var m_Request: URLRequest = URLRequest(url: m_URL)
+        m_Request.httpMethod = "POST"
+        m_Request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        
+        let m_Boundary: String = "Boundary-\(UUID().uuidString)"
+        m_Request.setValue("multipart/related; boundary=\(m_Boundary)", forHTTPHeaderField: "Content-Type")
+        
+        let m_RequestBody: Data = createRequestBodyForUploading(fileName: "new" + fileURL.lastPathComponent, multipartBoundary: m_Boundary, fileData: m_FileData)
+        
+        let m_RequestTask: URLSessionTask = URLSession.shared.uploadTask(with: m_Request, from: m_RequestBody) {
+            data, response, error in
+            
+            guard let m_Data = data else {
+                fatalError("\(error?.localizedDescription ?? "Data nil")")
+            }
+            
+            if (self.delegate != nil) {
+                DispatchQueue.main.async {
+                    self.delegate!.onFileUploadComplete()
+                }
+            }
+        }
+        
+        m_RequestTask.resume()
+    }
     
     //---- MARK: Helper Methods
     private func getFileDownloadDetails(file: GDFMDriveFile, apiKey: String, completion: @escaping (URL) -> Void) {
@@ -140,6 +178,37 @@ public class GDFMDriveDocumentManager {
         m_RequestTask.resume()
     }
     
+    private func createRequestBodyForUploading(fileName: String, multipartBoundary: String, fileData: Data) -> Data {
+        let m_FileName: String = fileName
+        let m_Boundary: String = multipartBoundary
+        let m_FileData: Data = fileData
+        
+        let m_MetaData = [
+            "name": m_FileName,
+            "mimeType": "application/octet-stream"
+        ]
+    
+        var m_MultipartBody: String = ""
+        m_MultipartBody += "--\(m_Boundary)\r\n"
+        m_MultipartBody += "Content-Type: application/json; charset=UTF-8\r\n\r\n"
+        
+        if let m_MetaDataJSON: Data = try? JSONSerialization.data(withJSONObject: m_MetaData) {
+            m_MultipartBody += String(data: m_MetaDataJSON, encoding: .utf8) ?? ""
+        }
+        
+        m_MultipartBody += "\r\n"
+        m_MultipartBody += "--\(m_Boundary)\r\n"
+        m_MultipartBody += "Content-Type: application/octet-stream\r\n\r\n"
+        
+        var m_MultipartBodyData: Data = Data()
+        m_MultipartBodyData.append(m_MultipartBody.data(using: .utf8)!)
+        m_MultipartBodyData.append(m_FileData)
+        m_MultipartBodyData.append("\r\n".data(using: .utf8)!)
+        m_MultipartBodyData.append("--\(m_Boundary)--\r\n".data(using: .utf8)!)
+        
+        return m_MultipartBodyData
+    }
+    
     private func getMimeTypeForFileType(_ fileType: String) -> String {
         if (fileType.contains("spreadsheet")) {
             return GDFMNameSpace.FileMimeType.googleSheet
@@ -158,4 +227,5 @@ public class GDFMDriveDocumentManager {
 public protocol GDFMDriveDocumentManagerDelegate {
     func onReceiveFileList(list: [GDFMDriveFile])
     func onFileDownloadComplete(tempURL: URL, fileName: String)
+    func onFileUploadComplete()
 }

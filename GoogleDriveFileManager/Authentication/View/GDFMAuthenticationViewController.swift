@@ -10,7 +10,7 @@ import UIKit
 public class GDFMAuthenticationViewController: UIViewController {
     public override func viewDidAppear(_ animated: Bool) {
         view.backgroundColor = .white
-//        GDFMUserDefaultManager.shared.googleAPIKey = "_none"
+        GDFMUserDefaultManager.shared.googleAPIKey = "_none"
         if (GDFMUserDefaultManager.shared.googleAPIKey != "_none") {
             GDFMDriveDocumentManager.shared.delegate = self
             GDFMDriveDocumentManager.shared.getListOfFilesFromDrive(apiKey: GDFMUserDefaultManager.shared.googleAPIKey)
@@ -52,5 +52,9 @@ extension GDFMAuthenticationViewController: GDFMDriveDocumentManagerDelegate {
     
     public func onFileDownloadComplete(tempURL: URL, fileName: String) {
         GDFMLocalFileManager.shared.moveFileIntoDocumentsFolder(sourceURL: tempURL, fileName: fileName)
+    }
+    
+    public func onFileUploadComplete() {
+        print("File Uploaded")
     }
 }
