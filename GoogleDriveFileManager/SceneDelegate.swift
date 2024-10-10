@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        let rootViewController: UIViewController = GDFMAuthenticationViewController()
+        let rootViewController: UIViewController = GDFMDocumentViewController()
         rootViewController.modalPresentationStyle = .fullScreen
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()

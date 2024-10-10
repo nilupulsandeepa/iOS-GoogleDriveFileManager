@@ -23,6 +23,11 @@ public class GDFMDriveDocumentManager {
     public func getListOfFiles() -> [GDFMDriveFile] {
         return g_CurrentDriveFileList
     }
+    
+    public func setListOfFiles(_ files: [GDFMDriveFile]) {
+        self.g_CurrentDriveFileList = files
+    }
+    
     //---- Get list of files
     public func getListOfFilesFromDrive(apiKey: String) {
         let m_URL: URL = URL(string: "https://www.googleapis.com/drive/v3/files")!
@@ -33,10 +38,23 @@ public class GDFMDriveDocumentManager {
         let m_RequestTask: URLSessionDataTask = URLSession.shared.dataTask(with: m_Request) {
             data, response, error in
             
-            guard let m_Data = data else {
-                fatalError("\(error?.localizedDescription ?? "Data nil")")
+            if error != nil {
+                if let m_Data = data {
+                    let m_DataString: String = String(data: m_Data, encoding: .utf8)!
+                    if (m_DataString.contains("UNAUTHENTICATED")) {
+                        if (self.delegate != nil) {
+                            DispatchQueue.main.async {
+                                self.delegate?.onPermisionFailed()
+                            }
+                        }
+                    }
+                } else {
+                    //handle other errors
+                }
+                return
             }
             
+            let m_Data: Data = data!
             do {
                 let m_FileList: GDFMDriveFileList = try JSONDecoder().decode(GDFMDriveFileList.self, from: m_Data)
                 self.g_CurrentDriveFileList = m_FileList.files
@@ -227,4 +245,5 @@ public protocol GDFMDriveDocumentManagerDelegate {
     func onReceiveFileList(list: [GDFMDriveFile])
     func onFileDownloadComplete(tempURL: URL, fileName: String)
     func onFileUploadComplete()
+    func onPermisionFailed()
 }
