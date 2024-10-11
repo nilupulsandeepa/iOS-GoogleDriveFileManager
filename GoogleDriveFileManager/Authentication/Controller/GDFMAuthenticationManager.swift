@@ -14,7 +14,6 @@ public class GDFMAuthenticationManager: NSObject {
     
     private var g_AuthSession: ASWebAuthenticationSession?
     private var g_PresentationAnchor: ASPresentationAnchor?
-    
     private var g_GoogleClientID = ""
     private var g_ReversedClientID = ""
     private var g_PermissionScope = "https://www.googleapis.com/auth/drive"
@@ -30,6 +29,9 @@ public class GDFMAuthenticationManager: NSObject {
     
     //---- MARK: Initialization
     public func initializeAuthSession() {
+        g_GoogleClientID = GDFMEnvironmentManager.shared.getPropertyForKey("GoogleClientID") ?? ""
+        g_ReversedClientID = GDFMEnvironmentManager.shared.getPropertyForKey("ReversedClientID") ?? ""
+        
         let m_RedirectURI = "\(g_ReversedClientID):/oauthredirect"
         var m_AuthURL = URL(string: "https://accounts.google.com/o/oauth2/auth")!
         let m_QueryParameterDictionary: [String: String] = [

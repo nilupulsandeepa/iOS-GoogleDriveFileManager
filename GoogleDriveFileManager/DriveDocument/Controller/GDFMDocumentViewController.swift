@@ -9,7 +9,6 @@ import UIKit
 
 public class GDFMDocumentViewController: UIViewController {
     public override func viewDidLoad() {
-        view.backgroundColor = .darkGray
         GDFMDriveDocumentManager.shared.delegate = self
         configureUI()
     }
