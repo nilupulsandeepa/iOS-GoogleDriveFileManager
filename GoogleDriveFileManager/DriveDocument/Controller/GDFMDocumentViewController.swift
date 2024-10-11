@@ -61,6 +61,10 @@ public class GDFMDocumentViewController: UIViewController {
         GDFMDriveDocumentManager.shared.setListOfFiles(list)
         g_DocumentView.stopActivityIndicatorAnimation()
         g_DocumentView.changeActivityStatusLabelText(text: "Files Received!")
+        g_DocumentView.updateFileList(list: list)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+            self.g_DocumentView.hideLoadingView()
+        })
     }
     
     private func handlePermisionFailed() {
@@ -71,12 +75,35 @@ public class GDFMDocumentViewController: UIViewController {
         })
     }
     
+    private func didTapUploadButton() {
+        let m_DocumentPickerViewController: UIDocumentPickerViewController = UIDocumentPickerViewController(forOpeningContentTypes: [.data], asCopy: true)
+        m_DocumentPickerViewController.modalPresentationStyle = .formSheet
+        m_DocumentPickerViewController.delegate = self
+        present(m_DocumentPickerViewController, animated: true)
+    }
+    
+    private func filePickedForUploading(url: URL) {
+        g_DocumentView.showLoadingView()
+        g_DocumentView.startActivityIndicatorAnimation()
+        g_DocumentView.changeActivityStatusLabelText(text: "Uploading...")
+        GDFMDriveDocumentManager.shared.uploadFileToDrive(fileURL: url, apiKey: GDFMUserDefaultManager.shared.googleAPIKey)
+    }
+    
+    private func didCompletedUploading() {
+        g_DocumentView.stopActivityIndicatorAnimation()
+        g_DocumentView.changeActivityStatusLabelText(text: "File Uploaded")
+        //---- Intentional Delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+            self.fetchDriveFileList()
+        })
+    }
+    
     //---- MARK: UI Components
     private lazy var g_DocumentView: GDFMDriveDocumentView = {
         let m_View: GDFMDriveDocumentView = GDFMDriveDocumentView()
         m_View.translatesAutoresizingMaskIntoConstraints = false
         
-//        m_View.delegate = self
+        m_View.delegate = self
         
         return m_View
     }()
@@ -93,7 +120,7 @@ extension GDFMDocumentViewController: GDFMDriveDocumentManagerDelegate {
     }
     
     public func onFileUploadComplete() {
-        
+        didCompletedUploading()
     }
     
     public func onPermisionFailed() {
@@ -107,3 +134,14 @@ extension GDFMDocumentViewController: GDFMAuthenticationViewControllerDelegate {
     }
 }
 
+extension GDFMDocumentViewController: GDFMDriveDocumentViewDelegate {
+    public func onUploadButtonTap() {
+        didTapUploadButton()
+    }
+}
+
+extension GDFMDocumentViewController: UIDocumentPickerDelegate {
+    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        filePickedForUploading(url: urls[0])
+    }
+}

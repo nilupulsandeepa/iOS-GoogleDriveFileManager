@@ -38,20 +38,22 @@ public class GDFMDriveDocumentManager {
         let m_RequestTask: URLSessionDataTask = URLSession.shared.dataTask(with: m_Request) {
             data, response, error in
             
-            if error != nil {
-                if let m_Data = data {
-                    let m_DataString: String = String(data: m_Data, encoding: .utf8)!
-                    if (m_DataString.contains("UNAUTHENTICATED")) {
-                        if (self.delegate != nil) {
-                            DispatchQueue.main.async {
-                                self.delegate?.onPermisionFailed()
+            if let m_Response: HTTPURLResponse = response as? HTTPURLResponse {
+                if m_Response.statusCode >= 400 && m_Response.statusCode < 500 {
+                    if let m_Data = data {
+                        let m_DataString: String = String(data: m_Data, encoding: .utf8)!
+                        if (m_DataString.contains("UNAUTHENTICATED")) {
+                            if (self.delegate != nil) {
+                                DispatchQueue.main.async {
+                                    self.delegate?.onPermisionFailed()
+                                }
                             }
                         }
+                    } else {
+                        //handle other errors
                     }
-                } else {
-                    //handle other errors
+                    return
                 }
-                return
             }
             
             let m_Data: Data = data!

@@ -19,4 +19,15 @@ public struct GDFMNameSpace {
         public static let googleDoc: String = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         public static let googlePresentation: String = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
     }
+    
+    public struct FileType {
+        public static let googleSheet: String = "Google Sheet"
+        public static let googleDoc: String = "Google Document"
+        public static let googlePresentation: String = "Google Presentation"
+        public static let other: String = "Other"
+    }
+    
+    public struct CollectionViewCellIdentifiers {
+        public static let driveDocumentCellIdentifier: String = "com.test.nsw.gdrive.GoogleDriveFileManager.cellidentifiers.drivedocumentcell"
+    }
 }

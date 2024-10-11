@@ -101,6 +101,7 @@ public class GDFMAuthenticationView: UIView {
         
         m_View.text = "Checking Permision..."
         m_View.textAlignment = .center
+        m_View.textColor = .black
         
         return m_View
     }()
@@ -155,7 +156,7 @@ public class GDFMAuthenticationView: UIView {
         
         m_View.addSubview(g_GoogleSignInButtonLabel)
         g_GoogleSignInButtonLabel.leadingAnchor.constraint(equalTo: g_GoogleSignInButtonIcon.trailingAnchor, constant: 8).isActive = true
-        g_GoogleSignInButtonLabel.trailingAnchor.constraint(equalTo: m_View.trailingAnchor, constant: -8).isActive = true
+        g_GoogleSignInButtonLabel.trailingAnchor.constraint(equalTo: m_View.trailingAnchor, constant: -12).isActive = true
         g_GoogleSignInButtonLabel.centerYAnchor.constraint(equalTo: m_View.centerYAnchor).isActive = true
         
         return m_View
@@ -177,6 +178,7 @@ public class GDFMAuthenticationView: UIView {
         m_View.translatesAutoresizingMaskIntoConstraints = false
         
         m_View.text = "Sign in with Google"
+        m_View.textColor = .black
         
         return m_View
     }()
