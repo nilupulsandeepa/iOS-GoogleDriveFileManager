@@ -69,6 +69,7 @@ public class GDFMDocumentViewController: UIViewController {
     
     private func handlePermisionFailed() {
         g_DocumentView.changeActivityStatusLabelText(text: "Permision Failed...")
+        GDFMUserDefaultManager.shared.googleAPIKey = "_none"
         //Intentional Delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
             self.showAuthenticationViewController()
@@ -98,6 +99,33 @@ public class GDFMDocumentViewController: UIViewController {
         })
     }
     
+    private func downloadFileFromDrive(fileIndex: Int) {
+        g_DocumentView.showLoadingView()
+        g_DocumentView.startActivityIndicatorAnimation()
+        g_DocumentView.changeActivityStatusLabelText(text: "File Downloading...")
+        GDFMDriveDocumentManager.shared.downloadFileFromDrive(file: GDFMDriveDocumentManager.shared.getListOfFiles()[fileIndex], apiKey: GDFMUserDefaultManager.shared.googleAPIKey)
+    }
+    
+    private func didCompleteDownloading(tempURL: URL, fileName: String) {
+        GDFMLocalFileManager.shared.moveFileIntoDocumentsFolder(sourceURL: tempURL, fileName: fileName)
+        g_DocumentView.stopActivityIndicatorAnimation()
+        g_DocumentView.changeActivityStatusLabelText(text: "File Downloaded")
+        //---- Intentional Delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+            self.g_DocumentView.hideLoadingView()
+        })
+    }
+    
+    private func didTapOptionIconFor(fileIndex: Int) {
+        let m_AlertView: UIAlertController = UIAlertController(title: "Options", message: "Choose an action", preferredStyle: .actionSheet)
+        m_AlertView.addAction(UIAlertAction(title: "Download File", style: .default, handler: {
+            alert in
+            self.downloadFileFromDrive(fileIndex: fileIndex)
+        }))
+        m_AlertView.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(m_AlertView, animated: true)
+    }
+    
     //---- MARK: UI Components
     private lazy var g_DocumentView: GDFMDriveDocumentView = {
         let m_View: GDFMDriveDocumentView = GDFMDriveDocumentView()
@@ -116,7 +144,7 @@ extension GDFMDocumentViewController: GDFMDriveDocumentManagerDelegate {
     }
     
     public func onFileDownloadComplete(tempURL: URL, fileName: String) {
-        
+        didCompleteDownloading(tempURL: tempURL, fileName: fileName)
     }
     
     public func onFileUploadComplete() {
@@ -137,6 +165,10 @@ extension GDFMDocumentViewController: GDFMAuthenticationViewControllerDelegate {
 extension GDFMDocumentViewController: GDFMDriveDocumentViewDelegate {
     public func onUploadButtonTap() {
         didTapUploadButton()
+    }
+    
+    public func onOptionButtonTap(fileIndex: Int) {
+        didTapOptionIconFor(fileIndex: fileIndex)
     }
 }
 

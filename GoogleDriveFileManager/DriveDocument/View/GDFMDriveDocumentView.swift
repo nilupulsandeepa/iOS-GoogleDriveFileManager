@@ -75,6 +75,14 @@ public class GDFMDriveDocumentView: UIView {
         g_LoadingView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
     
+    private func didSelectOptionsForCellAt(index: Int) {
+        if (delegate != nil) {
+            DispatchQueue.main.async {
+                self.delegate!.onOptionButtonTap(fileIndex: index)
+            }
+        }
+    }
+    
     @objc private func onUploadButtonTap() {
         if (delegate != nil) {
             DispatchQueue.main.async {
@@ -179,6 +187,8 @@ extension GDFMDriveDocumentView: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let m_ViewCell: GDFMDocumentCellView = collectionView.dequeueReusableCell(withReuseIdentifier: GDFMNameSpace.CollectionViewCellIdentifiers.driveDocumentCellIdentifier, for: indexPath) as! GDFMDocumentCellView
         m_ViewCell.setFile(file: g_FileList[indexPath.row])
+        m_ViewCell.delegate = self
+        m_ViewCell.setItemIdex(index: indexPath.row)
         return m_ViewCell
     }
 }
@@ -191,9 +201,20 @@ extension GDFMDriveDocumentView: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         8
     }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
+    }
+}
+
+extension GDFMDriveDocumentView: GDFMDocumentCellViewDelegate {
+    public func onOptionSelect(fileIndex: Int) {
+        didSelectOptionsForCellAt(index: fileIndex)
+    }
 }
 
 //---- MARK: Drive Document View Protocol
 public protocol GDFMDriveDocumentViewDelegate {
     func onUploadButtonTap()
+    func onOptionButtonTap(fileIndex: Int)
 }

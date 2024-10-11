@@ -9,6 +9,9 @@ import UIKit
 
 public class GDFMDocumentCellView: UICollectionViewCell {
     //---- MARK: Properties
+    private var g_ItemIndex: Int? = nil
+    
+    public var delegate: GDFMDocumentCellViewDelegate?
     
     //---- MARK: Constructor
     public override init(frame: CGRect) {
@@ -41,6 +44,12 @@ public class GDFMDocumentCellView: UICollectionViewCell {
         g_DocumentType.leadingAnchor.constraint(equalTo: g_DocumentName.leadingAnchor).isActive = true
         g_DocumentType.topAnchor.constraint(equalTo: g_DocumentName.bottomAnchor, constant: 8).isActive = true
         g_DocumentType.trailingAnchor.constraint(equalTo: g_DocumentName.trailingAnchor).isActive = true
+        
+        contentView.addSubview(g_OptionIcon)
+        g_OptionIcon.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        g_OptionIcon.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        g_OptionIcon.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8).isActive = true
+        g_OptionIcon.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
     }
     
     //---- MARK: Action Methods
@@ -48,6 +57,10 @@ public class GDFMDocumentCellView: UICollectionViewCell {
         g_DocumentName.text = file.name
         g_DocumentType.text = getFileType(type: file.mimeType)
         g_DocumentIcon.image = getFileTypeIcon(type: file.mimeType)
+    }
+    
+    public func setItemIdex(index: Int) {
+        g_ItemIndex = index
     }
     
     
@@ -76,6 +89,13 @@ public class GDFMDocumentCellView: UICollectionViewCell {
         }
     }
     
+    @objc private func onOptionIconTap() {
+        if (delegate != nil) {
+            DispatchQueue.main.async {
+                self.delegate!.onOptionSelect(fileIndex: self.g_ItemIndex!)
+            }
+        }
+    }
     
     //---- MARK: UI Components
     private lazy var g_DocumentIcon: UIImageView = {
@@ -116,6 +136,19 @@ public class GDFMDocumentCellView: UICollectionViewCell {
         let m_View: UIImageView = UIImageView()
         m_View.translatesAutoresizingMaskIntoConstraints = false
         
+        m_View.image = UIImage(systemName: "ellipsis.circle")!.withRenderingMode(.alwaysTemplate)
+        m_View.tintColor = .gray
+        m_View.contentMode = .scaleAspectFill
+        
+        m_View.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onOptionIconTap)))
+        m_View.isUserInteractionEnabled = true
+        
         return m_View
     }()
+}
+
+
+//---- MARK: Document Cell View Protocol
+public protocol GDFMDocumentCellViewDelegate {
+    func onOptionSelect(fileIndex: Int)
 }

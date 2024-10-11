@@ -115,7 +115,7 @@ public class GDFMDriveDocumentManager {
         let m_Boundary: String = "Boundary-\(UUID().uuidString)"
         m_Request.setValue("multipart/related; boundary=\(m_Boundary)", forHTTPHeaderField: "Content-Type")
         
-        let m_RequestBody: Data = createRequestBodyForUploading(fileName: "new" + fileURL.lastPathComponent, multipartBoundary: m_Boundary, fileData: m_FileData)
+        let m_RequestBody: Data = createRequestBodyForUploading(fileName: fileURL.lastPathComponent, multipartBoundary: m_Boundary, fileData: m_FileData)
         
         let m_RequestTask: URLSessionTask = URLSession.shared.uploadTask(with: m_Request, from: m_RequestBody) {
             data, response, error in
@@ -137,11 +137,14 @@ public class GDFMDriveDocumentManager {
     //---- MARK: Helper Methods
     private func getFileDownloadDetails(file: GDFMDriveFile, apiKey: String, completion: @escaping (URL) -> Void) {
         var m_URL: URL = URL(string: "https://www.googleapis.com/drive/v3/files/\(file.id)/download")!
-        let m_QueryParameterDictionary: [String: String] = [
-            "mimeType": getMimeTypeForFileType(file.mimeType)
-        ]
-        let m_QueryParameters: [URLQueryItem] = m_QueryParameterDictionary.map{ URLQueryItem(name: $0.key, value: $0.value )}
-        m_URL = m_URL.appending(queryItems: m_QueryParameters)
+        
+        if let m_MimeType = getMimeTypeForFileType(file.mimeType) {
+            let m_QueryParameterDictionary: [String: String] = [
+                "mimeType": m_MimeType
+            ]
+            let m_QueryParameters: [URLQueryItem] = m_QueryParameterDictionary.map{ URLQueryItem(name: $0.key, value: $0.value )}
+            m_URL = m_URL.appending(queryItems: m_QueryParameters)
+        }
         
         var m_Request: URLRequest = URLRequest(url: m_URL)
         m_Request.httpMethod = "POST"
@@ -149,6 +152,24 @@ public class GDFMDriveDocumentManager {
         
         let m_RequestTask: URLSessionTask = URLSession.shared.dataTask(with: m_Request) {
             data, response, error in
+            
+            if let m_Response: HTTPURLResponse = response as? HTTPURLResponse {
+                if m_Response.statusCode >= 400 && m_Response.statusCode < 500 {
+                    if let m_Data = data {
+                        let m_DataString: String = String(data: m_Data, encoding: .utf8)!
+                        if (m_DataString.contains("UNAUTHENTICATED")) {
+                            if (self.delegate != nil) {
+                                DispatchQueue.main.async {
+                                    self.delegate?.onPermisionFailed()
+                                }
+                            }
+                        }
+                    } else {
+                        //handle other errors
+                    }
+                    return
+                }
+            }
             
             guard let m_Data = data else {
                 fatalError("\(error?.localizedDescription ?? "Location nil")")
@@ -161,6 +182,7 @@ public class GDFMDriveDocumentManager {
                 completion(m_DownloadURL)
             } catch {
                 print(error.localizedDescription)
+                fatalError()
             }
         }
         
@@ -189,7 +211,7 @@ public class GDFMDriveDocumentManager {
             
             if (self.delegate != nil) {
                 DispatchQueue.main.async {
-                    self.delegate!.onFileDownloadComplete(tempURL: m_Location, fileName: "\(fileName).\(m_FileExtension)")
+                    self.delegate!.onFileDownloadComplete(tempURL: m_Location, fileName: "\(fileName)\(m_FileExtension != "" ? ".\(m_FileExtension)" : "")")
                 }
             }
         }
@@ -228,7 +250,7 @@ public class GDFMDriveDocumentManager {
         return m_MultipartBodyData
     }
     
-    private func getMimeTypeForFileType(_ fileType: String) -> String {
+    private func getMimeTypeForFileType(_ fileType: String) -> String? {
         if (fileType.contains("spreadsheet")) {
             return GDFMNameSpace.FileMimeType.googleSheet
         } else if (fileType.contains("document")) {
@@ -236,7 +258,7 @@ public class GDFMDriveDocumentManager {
         } else if (fileType.contains("presentation")) {
             return GDFMNameSpace.FileMimeType.googlePresentation
         } else {
-            return ""
+            return nil
         }
     }
     //---- Check authentication
