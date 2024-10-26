@@ -146,7 +146,6 @@
 		51B2DF7F2CAF9E630005601C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				51B2DF802CAF9E7E0005601C /* GDFMAuthenticationViewController.swift */,
 				5193E10B2CB66E4A004BD88A /* GDFMAuthenticationView.swift */,
 			);
 			path = View;
@@ -174,6 +173,7 @@
 		51C005AB2CAD2F3600565342 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				51B2DF802CAF9E7E0005601C /* GDFMAuthenticationViewController.swift */,
 				51C005AC2CAD2F5400565342 /* GDFMAuthenticationManager.swift */,
 			);
 			path = Controller;
